@@ -1,8 +1,8 @@
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import pageObjects.MainPage;
-import pageObjects.OrderStatusPage;
+import ru.samokat.pageobjects.MainPage;
+import ru.samokat.pageobjects.OrderStatusPage;
 import static org.junit.Assert.assertTrue;
 
 public class OrderStatusCheckTests {

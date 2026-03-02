@@ -1,12 +1,12 @@
-package pageobjects;
+package ru.samokat.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class orderpage extends basepage {
+public class OrderPage extends BasePage {
 
-    public orderpage(WebDriver driver) {
+    public OrderPage(WebDriver driver) {
         super(driver);
     }
 

@@ -1,4 +1,4 @@
-package pageobjects;
+package ru.samokat.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -6,18 +6,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class mainpage extends basepage {
+public class MainPage extends BasePage {
 
-    public mainpage(WebDriver driver) {
+    public MainPage(WebDriver driver) {
         super(driver);
     }
 
     // Логотип Яндекса в левом верхнем углу
     private By yandexLogo = By.xpath(".//img[@alt = 'Yandex']");
 
-    // Кликаем на логотип Яндекса, переходим на открывшееся окно
-    public void clickYaLogo() {
-        driver.findElement(yandexLogo).click();
+    // Кликаем на логотип Яндекса, переходим на открывшееся окно, получаем Url
+    public String clickYaLogo() {
+        clickElement(yandexLogo);
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         for (String windowHandle : driver.getWindowHandles()) {
@@ -26,14 +26,16 @@ public class mainpage extends basepage {
                 break;
             }
         }
+        return driver.getCurrentUrl();
     }
 
     // логотип Самоката в левом верхнем углу
     private By samokatLogo = By.xpath(".//img[@alt = 'Scooter']");
 
-    // Кликаем на логотип Самоката
-    public void clickSamokattLogo() {
+    // Кликаем на логотип Самоката и получаем Url
+    public String clickSamokattLogo() {
         clickElement(samokatLogo);
+        return driver.getCurrentUrl();
     }
 
     // Кнопка 'Статус заказа'
@@ -56,31 +58,31 @@ public class mainpage extends basepage {
     private By goButton = By.className("Header_Button__28dPO");
 
     // Нажимаем на кнопку 'Go'
-    public orderstatuspage clickGoButton(){
+    public OrderStatusPage clickGoButton(){
         WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.elementToBeClickable(goButton));
         clickElement(goButton);
-        return new orderstatuspage(driver);
+        return new OrderStatusPage(driver);
     }
 
     // Кнопка 'Заказать' вверху страницы
     private By orderButtonUp = By.xpath(".//button[@class='Button_Button__ra12g']");
 
     // Нажимаем на кнопку 'Заказать' вверху страницы
-    public orderpage clickOrderUpButton() {
+    public OrderPage clickOrderUpButton() {
         clickElement(orderButtonUp);
-        return  new orderpage(driver);
+        return  new OrderPage(driver);
     }
 
     // Кнопка 'Заказать' посередине страницы
     private By orderButtonMiddle = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
 
     // Прокручиваем страницу до кнопки 'Заказать' посередине страницы и нажимаем на нее
-    public orderpage clickOrderButtonMiddle() {
+    public OrderPage clickOrderButtonMiddle() {
         WebElement element = driver.findElement(orderButtonMiddle);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         clickElement(orderButtonMiddle);
-        return new orderpage(driver);
+        return new OrderPage(driver);
     }
 
     // Массив для хранения элеметнов выпадающего списка вопросов

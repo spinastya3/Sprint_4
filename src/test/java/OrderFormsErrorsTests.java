@@ -1,8 +1,8 @@
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import pageObjects.MainPage;
-import pageObjects.OrderPage;
+import ru.samokat.pageobjects.MainPage;
+import ru.samokat.pageobjects.OrderPage;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -19,7 +19,7 @@ public class OrderFormsErrorsTests {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPageElement = new MainPage(driver);
         OrderPage orderPageElement = mainPageElement.clickOrderUpButton();
-        orderPageElement.Registration("qq123", "Поттер", "Тисовая ул", "Сокол", "+7123456789");
+        orderPageElement.registration("qq123", "Поттер", "Тисовая ул", "Сокол", "+7123456789");
         assertFalse("нет сообщения о неккоректном имени", orderPageElement.isNameErrorTextDisplayed());
     }
 
@@ -30,7 +30,7 @@ public class OrderFormsErrorsTests {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPageElement = new MainPage(driver);
         OrderPage orderPageElement = mainPageElement.clickOrderUpButton();
-        orderPageElement.Registration("Гарри", "qqq", "Тисовая ул", "Сокол", "+7123456789");
+        orderPageElement.registration("Гарри", "qqq", "Тисовая ул", "Сокол", "+7123456789");
         assertFalse("нет сообщения о неккоректной фамилии", orderPageElement.isLastnameErrorTextDisplayed());
     }
 
@@ -41,7 +41,7 @@ public class OrderFormsErrorsTests {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPageElement = new MainPage(driver);
         OrderPage orderPageElement = mainPageElement.clickOrderUpButton();
-        orderPageElement.Registration("Гарри", "Поттер", "123", "Сокол", "+7123456789");
+        orderPageElement.registration("Гарри", "Поттер", "123", "Сокол", "+7123456789");
         assertFalse("нет сообщения о неккоректном адрессе", orderPageElement.isAddressErrorTextDisplayed());
     }
 
@@ -67,7 +67,7 @@ public class OrderFormsErrorsTests {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPageElement = new MainPage(driver);
         OrderPage orderPageElement = mainPageElement.clickOrderUpButton();
-        orderPageElement.Registration("Гарри", "Поттер", "Тисовая ул", "Сокол", "+");
+        orderPageElement.registration("Гарри", "Поттер", "Тисовая ул", "Сокол", "+");
         orderPageElement.clickNextButton();
         assertFalse("нет сообщения о неккоректном номере телефона", orderPageElement.isPhoneErrorTextDisplayed());
     }
@@ -79,7 +79,7 @@ public class OrderFormsErrorsTests {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPageElement = new MainPage(driver);
         OrderPage orderPageElement = mainPageElement.clickOrderUpButton();
-        orderPageElement.Registration("Гарри", "Поттер", "Тисовая ул", "Сокол", "+7123456789");
+        orderPageElement.registration("Гарри", "Поттер", "Тисовая ул", "Сокол", "+7123456789");
         orderPageElement.clickNextButton();
         orderPageElement.setHowLong("сутки");
         orderPageElement.setBlackColour();
@@ -94,7 +94,7 @@ public class OrderFormsErrorsTests {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPageElement = new MainPage(driver);
         OrderPage orderPageElement = mainPageElement.clickOrderUpButton();
-        orderPageElement.Registration("Гарри", "Поттер", "Тисовая ул", "Сокол", "+7123456789");
+        orderPageElement.registration("Гарри", "Поттер", "Тисовая ул", "Сокол", "+7123456789");
         orderPageElement.clickNextButton();
         orderPageElement.setDate("10.10.2060");
         orderPageElement.setBlackColour();

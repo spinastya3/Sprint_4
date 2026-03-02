@@ -1,16 +1,16 @@
-package pageobjects;
+package ru.samokat.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class orderstatuspage {
+public class OrderStatusPage {
 
     private WebDriver driver;
     private WebDriverWait wait;
 
 
-    public orderstatuspage(WebDriver driver) {
+    public OrderStatusPage(WebDriver driver) {
         this.driver = driver;
     }
 
