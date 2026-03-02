@@ -1,12 +1,12 @@
-package pageObjects;
+package pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class OrderPage extends BasePage {
+public class orderpage extends basepage {
 
-    public OrderPage(WebDriver driver) {
+    public orderpage(WebDriver driver) {
         super(driver);
     }
 
@@ -87,7 +87,7 @@ public class OrderPage extends BasePage {
     }
 
     // Регистрируемся
-    public void Registration(String name, String lastname, String address, String metro, String phone) {
+    public void registration(String name, String lastname, String address, String metro, String phone) {
         setName(name);
         setLastname(lastname);
         setAddress(address);
@@ -166,13 +166,25 @@ public class OrderPage extends BasePage {
     // Окно поддтверждения заказа
     private By confirmOrderWindow = By.className("Order_Modal__YZ-d3");
 
-    // Проверяем, что окно поддтверждения заказа появилось
-    public boolean isConfirmOrderWindowDisplayed() {
-        return driver.findElement(confirmOrderWindow).isDisplayed();
-    }
-
     // Проверяем, что окно поддтверждения заказа не появилось
     public boolean isConfirmOrderWindowNotDisplayed() {
         return driver.findElements(confirmOrderWindow).isEmpty();
+    }
+
+    // Кнопка 'Да'
+    private By yesButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
+
+    // Нажимаем кнопку 'Да'
+    public void clickYesButton() {
+        clickElement(yesButton);
+    }
+
+    // Кнопка 'Посмотреть статус'
+    private By statusButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Посмотреть статус']");
+
+
+    // Проверяем, что кнопка 'Посмотреть статус' заказа появилось
+    public boolean isConfirmOrderBroyWindowDisplayed() {
+        return !driver.findElements(statusButton).isEmpty();
     }
 }

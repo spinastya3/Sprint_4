@@ -1,11 +1,11 @@
-package pageObjects;
+package pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public abstract class BasePage {
+public abstract class basepage {
     protected WebDriver driver;
 
-    public BasePage(WebDriver driver) {
+    public basepage(WebDriver driver) {
         this.driver = driver;
     }
 
