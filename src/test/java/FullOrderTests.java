@@ -23,6 +23,7 @@ public class FullOrderTests extends BaseTest {
         orderPage.clickNextButton();
         orderPage.confirmOrder("01.11.2042", "пятеро суток", "", "");
         orderPage.clickYesButton();
+        orderPage.getOrderNumber();
         orderPage.clickStatusButton().checkButtonDeleteOrderDisplayed();
     }
 

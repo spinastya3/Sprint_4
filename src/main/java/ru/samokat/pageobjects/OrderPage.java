@@ -2,12 +2,11 @@ package ru.samokat.pageobjects;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
 import java.time.Duration;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class OrderPage {
@@ -17,29 +16,33 @@ public class OrderPage {
     // Второй заголовок страницы
     private final SelenideElement secondOrderHeader = $(byText("Про аренду"));
     // логотип Самоката в левом верхнем углу
-    private final SelenideElement samokatLogo = $("img[alt='Scooter']");
+    private final SelenideElement samokatLogo = $("[class*='Header_Logo'] img[alt*='Scooter']");
     // Логотип Яндекса в левом верхнем углу
-    private final SelenideElement yandexLogo = $("img[alt = 'Yandex']");
+    private final SelenideElement yandexLogo = $("[class*='Header_Logo'] img[alt*='Yandex']");
     // Поле для ввода имени
-    private final SelenideElement nameField = $(By.xpath(".//input[@placeholder= '* Имя']"));
+    private final SelenideElement nameField = $("input[placeholder*='Имя']");
     // Поле для ввода фамилии
-    private final SelenideElement lastnameField = $(By.xpath(".//input[@placeholder= '* Фамилия']"));
+    private final SelenideElement lastnameField = $("input[placeholder*='Фамилия']");
     // Поле для ввода адресса
-    private final SelenideElement addressField = $(By.xpath(".//input[@placeholder= '* Адрес: куда привезти заказ']"));
+    private final SelenideElement addressField = $("input[placeholder*='Адрес: куда привезти заказ']");
     // Поле для ввода станции метро
-    private final SelenideElement metroField = $(By.xpath(".//input[@placeholder='* Станция метро']"));
+    private final SelenideElement metroField = $("input[placeholder*='Станция метро']");
+    // Список станций
+    private final SelenideElement metroStations = $(".select-search__row");
     // Поле для ввода номера телефона
-    private final SelenideElement phoneField = $(By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']"));
+    private final SelenideElement phoneField = $("input[placeholder*='Телефон: на него позвонит курьер']");
     // Кнопка 'Далее'
     private final SelenideElement nextButton = $(byText("Далее"));
     // Поле для ввода даты
-    private final SelenideElement dateField = $(By.xpath(".//input[@placeholder= '* Когда привезти самокат']"));
+    private final SelenideElement dateField = $("input[placeholder*='Когда привезти самокат']");
     // Селектор для выбора длительности аренды
-    private final SelenideElement howLongSelect = $(By.className("Dropdown-control"));
+    private final SelenideElement howLongSelect = $(".Dropdown-control");
+    // Список возможного срока аренды
+    private final SelenideElement howLongList =$(".Dropdown-menu");
     // Поле для ввода комментария для курьера
-    private final SelenideElement commentField = $(By.xpath(".//input[@placeholder= 'Комментарий для курьера']"));
+    private final SelenideElement commentField = $("input[placeholder*='Комментарий для курьера']");
     // Кнопка 'Заказать'
-    private final SelenideElement orderButton = $("div[class*='Order_Buttons']").$(byText("Заказать"));
+    private final SelenideElement orderButton = $("[class*='Order_Buttons']").$(byText("Заказать"));
     // Окно поддтверждения заказа
     private final SelenideElement confirmWindow = $(byText("Хотите оформить заказ?"));
     // Кнопка 'Да'
@@ -51,7 +54,7 @@ public class OrderPage {
     // Кнопка 'Посмотреть статус'
     private final SelenideElement statusButton = $(byText("Посмотреть статус"));
     // Ошибки полей регистрации
-    private final ElementsCollection inputErrors = $$("div[class*='Input_ErrorMessage']");
+    private final ElementsCollection inputErrors = $$("[class*='Input_ErrorMessage']");
 
     // Проверяем появления страницы оформления заказа по наличию поля для ввода имени
     public void checkNameFieldDisplayed() {
@@ -75,8 +78,9 @@ public class OrderPage {
 
     // Выбираем станцию метро
     public void setMetro(String metro) {
-        metroField.val(metro);
-        $(byText(metro)).shouldBe((visible)).click();
+        metroField.click();
+        metroField.sendKeys(metro);
+        metroStations.shouldBe((visible), Duration.ofSeconds(10)).click();
     }
 
     // Вводим номер телефона
@@ -103,13 +107,15 @@ public class OrderPage {
 
     // Вводим дату
     public void setDate(String date) {
-        dateField.val(date).pressEnter();
+        dateField.click();
+        dateField.sendKeys(date);
+        dateField.pressEnter();
     }
 
     // Выбираем длительность аренды
     public void setHowLong(String duration) {
         howLongSelect.click();
-        $(byText(duration)).shouldBe(visible).click();
+        howLongList.shouldBe(visible).$(byText(duration)).click();
     }
 
     // Выбираем  цвет
@@ -160,7 +166,7 @@ public class OrderPage {
 
     //Нажваем кнопку 'Посмотреть статус'
     public OrderStatusPage clickStatusButton(){
-        statusButton.shouldBe(visible, Duration.ofSeconds(10)).click();
+        statusButton.shouldBe(interactable, Duration.ofSeconds(15)).click();
         return page(OrderStatusPage.class);
     }
 
@@ -198,7 +204,8 @@ public class OrderPage {
     // Кликаем на логотип Яндекса, переходим на открывшееся окно, получаем Url
     public void clickYaLogo() {
         yandexLogo.click();
-        switchTo().window(1);
+       // Wait().until(d -> d.getWindowHandles().size() > 1);
+        switchTo().window(1, Duration.ofSeconds(15));
     }
 }
 

@@ -4,6 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import ru.samokat.pageobjects.MainPage;
 
+import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
 public class BaseTest {
 
     @BeforeAll
@@ -16,6 +19,15 @@ public class BaseTest {
     public void tearDown() {
         Selenide.clearBrowserCookies();
         Selenide.clearBrowserLocalStorage();
+        if (getWebDriver().getWindowHandles().size() > 1) {
+            switchTo().window(0);
+            for (String handle : getWebDriver().getWindowHandles()) {
+                if (!handle.equals(getWebDriver().getWindowHandle())) {
+                    switchTo().window(handle).close();
+                }
+            }
+            switchTo().window(0);
+        }
     }
 
     public MainPage openMainPage() {
