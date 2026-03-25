@@ -5,19 +5,18 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
-
 import java.time.Duration;
 
 public class OrderStatusPage {
 
     // Изображение 'Такого заказа нет'
-    private final SelenideElement imageNotFound = $(By.cssSelector("img[alt='Not found']"));
+    private final SelenideElement imageNotFound = $("img[alt*='Not found']");
     // Кнопка 'Отменить заказ'
     private final SelenideElement buttonDeleteOrder = $(byText("Отменить заказ"));
     // логотип Самоката в левом верхнем углу
-    private final SelenideElement samokatLogo = $("img[alt='Scooter']");
+    private final SelenideElement samokatLogo = $("[class*='Header_Logo'] img[alt*='Scooter']");
 
     // Кликаем на логотип Самоката и получаем Url
     public MainPage clickSamokatLogo() {
@@ -32,6 +31,9 @@ public class OrderStatusPage {
 
     // Проверяем, что кнопка 'Отменить заказ' появилось
     public void checkButtonDeleteOrderDisplayed() {
+        if (buttonDeleteOrder.is(visible)){
+            Selenide.refresh();
+        }
         buttonDeleteOrder.shouldBe(visible, Duration.ofSeconds(15));
     }
 }
