@@ -29,8 +29,8 @@ public class OrderStatusCheckTests extends BaseTest {
     @ParameterizedTest(name = "Поиск заказа №{0}")
     @MethodSource("orderStatusData")
     public void checkOrderStatusTest(String orderNumber, String resultType) {
-        mainPage.clickOrderStatusButton();
-        mainPage.setOrderNumber(orderNumber);
+        mainPage.clickOrderStatusButton()
+                .setOrderNumber(orderNumber);
         OrderStatusPage orderStatusPage = mainPage.clickGoButton();
         if ("Found".equals(resultType)) {
             orderStatusPage.checkButtonDeleteOrderDisplayed();

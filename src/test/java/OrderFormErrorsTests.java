@@ -18,33 +18,33 @@ public class OrderFormErrorsTests extends BaseTest{
     @DisplayName("Заполнение формы регистрации невалидными данными")
     public void checkRegistrationOrderFormValidationErrors (){
 
-        OrderPage orderPage = mainPage.clickOrderButtonUp();
-        orderPage.registration("f","f","f",null, "f");
-        orderPage.clickNextButton();
-        orderPage.checkRegisrationErrors();
+        OrderPage orderPage = mainPage.clickOrderButtonUp()
+        .registration("f","f","f",null, "f")
+        .clickNextButton()
+        .checkRegisrationErrors();
     }
 
     @Test
     @DisplayName("Нельзя оформить заказ без заполнения формы заказа")
     public void checkConfirmOrderFormValidationErrors (){
 
-        OrderPage orderPage = mainPage.clickOrderButtonUp();
-        orderPage.registration("Гермиона", "Грейнджер", "Лондон сити", "Курская", "00000000000");
-        orderPage.clickNextButton();
-        orderPage.clickOrderButton();
-        orderPage.checkConfirmWindowNotDisplayed();
-        orderPage.checkSecondOrderHeaderDisplayed();
+        mainPage.clickOrderButtonUp()
+        .registration("Гермиона", "Грейнджер", "Лондон сити", "Курская", "00000000000")
+        .clickNextButton()
+        .clickOrderButton()
+        .checkConfirmWindowNotDisplayed()
+        .checkSecondOrderHeaderDisplayed();
     }
 
     @Test
     @DisplayName("Нельзя оформить заказ на прошедшую дату")
     public void checkPastDateOrderError(){
 
-        OrderPage orderPage = mainPage.clickOrderButtonUp();
-        orderPage.registration("Гермиона", "Грейнджер", "Лондон сити", "Курская", "00000000000");
-        orderPage.clickNextButton();
-        orderPage.confirmOrder("01.01.1600", "семеро суток", "серая безысходность", "");
-        orderPage.checkConfirmWindowNotDisplayed();
-        orderPage.checkSecondOrderHeaderDisplayed();
+        mainPage.clickOrderButtonUp()
+        .registration("Гермиона", "Грейнджер", "Лондон сити", "Курская", "00000000000")
+        .clickNextButton()
+        .confirmOrder("01.01.1600", "семеро суток", "серая безысходность", "")
+        .checkConfirmWindowNotDisplayed()
+        .checkSecondOrderHeaderDisplayed();
     }
 }

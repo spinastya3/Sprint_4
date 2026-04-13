@@ -16,29 +16,32 @@ public class FullOrderTests extends BaseTest {
 
     @Test
     @DisplayName("Создание заказа и просмотр закза через кнопку 'Посмотреть статус'")
-    public void fullOrderSteps(){
+    public void fullOrderSteps() {
 
-        OrderPage orderPage = mainPage.clickOrderButtonUp();
-        orderPage.registration("Альбус", "Дамблдор", "школа Хогвартс", "Южная", "99999999999");
-        orderPage.clickNextButton();
-        orderPage.confirmOrder("01.11.2042", "пятеро суток", "", "");
-        orderPage.clickYesButton();
-        orderPage.getOrderNumber();
-        orderPage.clickStatusButton().checkButtonDeleteOrderDisplayed();
+        OrderPage orderPage = mainPage.clickOrderButtonUp()
+                .registration("Альбус", "Дамблдор", "школа Хогвартс", "Южная", "99999999999")
+                .clickNextButton()
+                .confirmOrder("01.11.2042", "пятеро суток", "", "")
+                .clickYesButton();
+                orderPage.getOrderNumber();
+                orderPage.clickStatusButton()
+                        .checkButtonDeleteOrderDisplayed();
     }
 
     @Test
     @DisplayName("Создание заказа и его поиск по номеру")
-    public void checkOrderNumberInBase(){
-        OrderPage orderPage = mainPage.clickOrderButtonUp();
-        orderPage.registration("Минерва", "МакГонагал", "школа Хогвартс", "Фили", "99999999999");
-        orderPage.clickNextButton();
-        orderPage.confirmOrder("11.01.2042", "трое суток", "", "");
-        orderPage.clickYesButton();
+    public void checkOrderNumberInBase() {
+        OrderPage orderPage = mainPage.clickOrderButtonUp()
+                .registration("Минерва", "МакГонагал", "школа Хогвартс", "Фили", "99999999999")
+                .clickNextButton()
+                .confirmOrder("11.01.2042", "трое суток", "", "")
+                .clickYesButton();
         String orderNumber = orderPage.getOrderNumber();
-        mainPage = orderPage.clickStatusButton().clickSamokatLogo();
-        mainPage.clickOrderStatusButton();
-        mainPage.setOrderNumber(orderNumber);
-        mainPage.clickGoButton().checkButtonDeleteOrderDisplayed();
+        orderPage.clickStatusButton()
+                .clickSamokatLogo()
+                .clickOrderStatusButton()
+                .setOrderNumber(orderNumber)
+                .clickGoButton()
+                .checkButtonDeleteOrderDisplayed();
     }
 }

@@ -16,13 +16,15 @@ public class OrderButtonsTests extends BaseTest {
     @Test
     @DisplayName("Верхняя кнопка 'Заказать'")
     public void clickOrderButtonUp(){
-        mainPage.clickOrderButtonUp().checkNameFieldDisplayed();
+        mainPage.clickOrderButtonUp()
+                .checkNameFieldDisplayed();
     }
 
     @Test
     @DisplayName("Средняя кнопка 'Заказать'")
     public void clickOrderButtonMiddle(){
-        mainPage.clickOrderButtonMiddle().checkNameFieldDisplayed();
+        mainPage.clickOrderButtonMiddle()
+                .checkNameFieldDisplayed();
     }
 }
 

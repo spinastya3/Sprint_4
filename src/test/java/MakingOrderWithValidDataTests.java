@@ -30,13 +30,12 @@ public class MakingOrderWithValidDataTests extends BaseTest {
     @DisplayName("Проверка отмены подтверждения заказа")
     public void cancelOrderConfirmationTest(){
 
-        OrderPage orderPage = mainPage.clickOrderButtonMiddle();
-        orderPage.registration("Гермиона", "Грейнджер", "Лондон сити", "Курская", "00000000000");
-        orderPage.clickNextButton();
-        orderPage.confirmOrder("12.12.2050", "семеро суток", "серая безысходность", "");
-        orderPage.clickNoButton();
-        orderPage.checkSecondOrderHeaderDisplayed();
-
+           mainPage.clickOrderButtonMiddle()
+        .registration("Гермиона", "Грейнджер", "Лондон сити", "Курская", "00000000000")
+        .clickNextButton()
+        .confirmOrder("12.12.2050", "семеро суток", "серая безысходность", "")
+        .clickNoButton()
+        .checkSecondOrderHeaderDisplayed();
     }
 
     @ParameterizedTest(name="Заказ для {1}")
@@ -44,11 +43,11 @@ public class MakingOrderWithValidDataTests extends BaseTest {
     @MethodSource("correctOrderData")
     public void testOrder(String name, String lastname, String address, String metro, String phone, String date, String duration, String color, String comment) {
 
-        OrderPage orderPage = mainPage.clickOrderButtonUp();
-        orderPage.registration(name, lastname, address, metro, phone);
-        orderPage.clickNextButton();
-        orderPage.confirmOrder(date, duration, color, comment);
-        orderPage.clickYesButton();
-        orderPage.checkStatusButtonDisplayed();
+        mainPage.clickOrderButtonUp()
+                .registration(name, lastname, address, metro, phone)
+                .clickNextButton()
+                .confirmOrder(date, duration, color, comment)
+                .clickYesButton()
+                .checkStatusButtonDisplayed();
     }
 }

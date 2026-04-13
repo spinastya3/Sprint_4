@@ -2,8 +2,9 @@ package ru.samokat.pageobjects;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
 import java.time.Duration;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -56,40 +57,40 @@ public class OrderPage {
     // Ошибки полей регистрации
     private final ElementsCollection inputErrors = $$("[class*='Input_ErrorMessage']");
 
-    // Проверяем появления страницы оформления заказа по наличию поля для ввода имени
+    @Step("Проверяем появления страницы оформления заказа по наличию поля для ввода имени")
     public void checkNameFieldDisplayed() {
         nameField.shouldBe(visible);
     }
 
-    // Вводим имя
+    @Step("Вводим имя")
     public void setName(String name) {
         nameField.val(name);
     }
 
-    // Вводим фамилию
+    @Step("Вводим фамилию")
     public void setLastname(String lastname) {
         lastnameField.val(lastname);
     }
 
-    // Вводим адресс
+    @Step("Вводим адресс")
     public void setAddress(String address) {
         addressField.val(address);
     }
 
-    // Выбираем станцию метро
+    @Step("Выбираем станцию метро")
     public void setMetro(String metro) {
         metroField.click();
         metroField.sendKeys(metro);
         metroStations.shouldBe((visible), Duration.ofSeconds(10)).click();
     }
 
-    // Вводим номер телефона
+    @Step("Вводим номер телефона")
     public void setPhone(String phone) {
         phoneField.val(phone);
     }
 
-    // Регистрируемся
-    public void registration(String name, String lastname, String address, String metro, String phone) {
+    @Step("Регистрируемся")
+    public OrderPage registration(String name, String lastname, String address, String metro, String phone) {
         setName(name);
         setLastname(lastname);
         setAddress(address);
@@ -97,65 +98,70 @@ public class OrderPage {
             setMetro(metro);
         }
         setPhone(phone);
+        return this;
     }
 
-    // Кликаем в заголовок для смены фокуса, нажимаем кнупку 'Далее'
-    public void clickNextButton(){
+    @Step("Кликаем в заголовок для смены фокуса, нажимаем кнупку 'Далее'")
+    public OrderPage clickNextButton(){
         orderHeader.click();
         nextButton.click();
+        return this;
     }
 
-    // Вводим дату
+    @Step("Вводим дату")
     public void setDate(String date) {
         dateField.click();
         dateField.sendKeys(date);
         dateField.pressEnter();
     }
 
-    // Выбираем длительность аренды
+    @Step("Выбираем длительность аренды")
     public void setHowLong(String duration) {
         howLongSelect.click();
         howLongList.shouldBe(visible).$(byText(duration)).click();
     }
 
-    // Выбираем  цвет
+    @Step("Выбираем  цвет")
     public void setColour(String color) {
         if (color != null && !color.isEmpty()) {
             $(byText(color)).shouldBe(visible).click();
         }
     }
 
-    // Вводим комментарий для курьера
+    @Step("Вводим комментарий для курьера")
     public void setComment(String comment) {
         commentField.val(comment);
     }
 
-    // Нажимаем кнопку 'Заказать'
-    public void clickOrderButton() {
+    @Step("Нажимаем кнопку 'Заказать'")
+    public OrderPage clickOrderButton() {
         orderButton.click();
+        return this;
     }
 
-    // Заполняем форму заказа
-    public void confirmOrder(String date, String duration, String color, String comment) {
+    @Step("Заполняем форму заказа")
+    public OrderPage confirmOrder(String date, String duration, String color, String comment) {
         setDate(date);
         setHowLong(duration);
         setColour(color);
         setComment(comment);
         clickOrderButton();
+        return this;
     }
 
-    // Нажимаем кнопку 'Да'
-    public void clickYesButton() {
-
+    @Step("Нажимаем кнопку 'Да'")
+    public OrderPage clickYesButton() {
         yesButton.click();
+        return this;
     }
 
-    // Проверяем, что кнопка 'Посмотреть статус' заказа появилось
-    public void checkStatusButtonDisplayed() {
+    @Step("Проверяем, что кнопка 'Посмотреть статус' заказа появилось")
+    public OrderPage checkStatusButtonDisplayed() {
         statusButton.shouldBe(visible, Duration.ofSeconds(15));
+        return this;
     }
 
-    // Добываем номер заказа
+    @Step("Добываем номер заказа'")
     public String getOrderNumber(){
         orderText.should(matchText(".*\\d+.*"), Duration.ofSeconds(10));
         String fullText = orderText.getText();
@@ -164,24 +170,26 @@ public class OrderPage {
         return orderNumber;
     }
 
-    //Нажваем кнопку 'Посмотреть статус'
+    @Step("Нажваем кнопку 'Посмотреть статус'")
     public OrderStatusPage clickStatusButton(){
         statusButton.shouldBe(interactable, Duration.ofSeconds(15)).click();
         return page(OrderStatusPage.class);
     }
 
-    // нажимаем кнопку 'Нет'
-    public void clickNoButton() {
+    @Step("нажимаем кнопку 'Нет'")
+    public OrderPage clickNoButton() {
         noButton.click();
+        return this;
     }
 
-    // Проверяем, что второй заголовок страницы не пропал
-    public void checkSecondOrderHeaderDisplayed() {
+    @Step("Проверяем, что второй заголовок страницы не пропал")
+    public OrderPage checkSecondOrderHeaderDisplayed() {
         secondOrderHeader.shouldBe(visible, Duration.ofSeconds(15));
+        return this;
     }
 
-    // Проверяем ошибки в полях регистрации
-    public void checkRegisrationErrors(){
+    @Step("Проверяем ошибки в полях регистрации")
+    public OrderPage checkRegisrationErrors(){
         inputErrors.filter(visible).shouldHave(CollectionCondition.textsInAnyOrder(
                 "Введите корректное имя",
                 "Введите корректную фамилию",
@@ -189,22 +197,23 @@ public class OrderPage {
                 "Введите корректный номер")
         );
         $(byText("Выберите станцию")).should(exist);
+        return this;
     }
 
-    //Проверяем что окно поддтевржения не появилось
-    public void checkConfirmWindowNotDisplayed(){
+    @Step("Проверяем что окно поддтевржения не появилось")
+    public OrderPage checkConfirmWindowNotDisplayed(){
         confirmWindow.shouldNotBe(visible);
+        return this;
     }
 
-    // Кликаем на логотип Самоката и получаем Url
+    @Step("Кликаем на логотип Самоката и получаем Url")
     public void clickSamokatLogo() {
         samokatLogo.click();
     }
 
-    // Кликаем на логотип Яндекса, переходим на открывшееся окно, получаем Url
+    @Step("Кликаем на логотип Яндекса, переходим на открывшееся окно, получаем Url")
     public void clickYaLogo() {
         yandexLogo.click();
-       // Wait().until(d -> d.getWindowHandles().size() > 1);
         switchTo().window(1, Duration.ofSeconds(15));
     }
 }
