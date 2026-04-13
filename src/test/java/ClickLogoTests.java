@@ -40,8 +40,8 @@ public class ClickLogoTests extends BaseTest {
 
         mainPage.clickYaLogo();
         webdriver().shouldHave(urlContaining("ya.ru/"), Duration.ofSeconds(15));
-        Selenide.closeWindow();
-        switchTo().window(0);
+        //Selenide.closeWindow();
+       // switchTo().window(0);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ClickLogoTests extends BaseTest {
 
         mainPage.clickOrderButtonUp().clickYaLogo();
         webdriver().shouldHave(urlContaining("ya.ru/"), Duration.ofSeconds(15));
-        Selenide.closeWindow();
-        switchTo().window(0);
+//        Selenide.closeWindow();
+//        switchTo().window(0);
     }
 }

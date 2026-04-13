@@ -1,5 +1,7 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import ru.samokat.pageobjects.MainPage;
@@ -13,6 +15,7 @@ public class BaseTest {
     public static void setupAll(){
         Configuration.browser = "firefox";
         Configuration.baseUrl = "https://qa-scooter.praktikum-services.ru";
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true));
     }
 
     @AfterEach
@@ -31,12 +34,6 @@ public class BaseTest {
     }
 
     public MainPage openMainPage() {
-        MainPage mainPage = Selenide.open("/", MainPage.class);
-        mainPage.clickCookieWarningButton(); // Убираем куки прямо здесь
-        return mainPage;
-    }
-
-    public static MainPage openMainPageStatic() {
         MainPage mainPage = Selenide.open("/", MainPage.class);
         mainPage.clickCookieWarningButton();
         return mainPage;

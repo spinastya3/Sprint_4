@@ -4,9 +4,8 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Step;
 import com.codeborne.selenide.SelenideElement;
-
 import java.time.Duration;
 
 public class MainPage {
@@ -30,53 +29,55 @@ public class MainPage {
     // Выпадающий список вопрос - ответ
     private final ElementsCollection questionList = $$("[class*='accordion__item']");
 
-    // бираем предупреждение о куках
+    @Step("Убираем предупреждение о куках")
     public void clickCookieWarningButton() {
         if (cookieWarningButton.isDisplayed()) {
             cookieWarningButton.click();
         }
     }
 
-    // Кликаем на логотип Яндекса, переходим на открывшееся окно, получаем Url
+    @Step("Кликаем на логотип Яндекса, переходим на открывшееся окно, получаем Url")
     public void clickYaLogo() {
         yandexLogo.click();
         switchTo().window(1, Duration.ofSeconds(15));
     }
 
-    // Кликаем на логотип Самоката и получаем Url
+    @Step("Кликаем на логотип Самоката и получаем Url")
     public void clickSamokatLogo() {
         samokatLogo.click();
     }
 
-    // Нажимаем на кнопку 'Статус заказа'
-    public void clickOrderStatusButton() {
+    @Step("Нажимаем на кнопку 'Статус заказа'")
+    public MainPage clickOrderStatusButton() {
         orderStatusButton.click();
+        return this;
     }
 
-    // Водим номер закза
-    public void setOrderNumber(String orderNumber) {
+    @Step("Вdодим номер закза")
+    public MainPage setOrderNumber(String orderNumber) {
         orderNumberField.setValue(orderNumber);
+        return this;
     }
 
-    // Нажимаем на кнопку 'Go'
+    @Step("Нажимаем на кнопку 'Go'")
     public OrderStatusPage clickGoButton() {
         goButton.shouldBe(enabled).click();
         return page(OrderStatusPage.class);
     }
 
-    // Нажимаем на кнопку 'Заказать' вверху страницы
+    @Step("Нажимаем на кнопку 'Заказать' вверху страницы")
     public OrderPage clickOrderButtonUp() {
         orderButtonUp.click();
         return page(OrderPage.class);
     }
 
-    // Прокручиваем страницу до кнопки 'Заказать' посередине страницы и нажимаем на нее
+    @Step("Прокручиваем страницу до кнопки 'Заказать' посередине страницы и нажимаем на нее")
     public OrderPage clickOrderButtonMiddle() {
         orderButtonMiddle.scrollIntoView(true).click();
         return page(OrderPage.class);
     }
 
-    // Открываем вопрос, пореряем текст ответа
+    @Step("Открываем вопрос, проверяем текст ответа")
     public void checkQuestion(int index, String expectedAnswer){
         questionList.get(index).scrollIntoView(true).shouldBe(visible).click();
         questionList.get(index).shouldHave(text(expectedAnswer));
